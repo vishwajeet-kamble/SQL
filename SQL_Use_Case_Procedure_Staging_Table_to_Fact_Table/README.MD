@@ -105,16 +105,19 @@ Sample Table –
 Fact_Table -
 ![alt text](https://github.com/vishwajeet-kamble/SQL/blob/main/SQL_Use_Case_Procedure_Staging_Table_to_Fact_Table/images/FACT_TABLE.png?raw=true)
 
+
 Staging_Table -
-![alt text](https://github.com/vishwajeet-kamble/SQL/SQL_Use_Case_Staging_Table_to_Fact_Table/Images/STAGING_TABLE.png)
+![alt text](https://github.com/vishwajeet-kamble/SQL/blob/main/SQL_Use_Case_Staging_Table_to_Fact_Table/Images/STAGING_TABLE.png?raw=true)
+
 
 After Execution of Query – 
 
 Fact_Table -
-![alt text](https://github.com/vishwajeet-kamble/SQL/SQL_Use_Case_Staging_Table_to_Fact_Table/Images/FACT_TABLE_V1.png)
+![alt text](https://github.com/vishwajeet-kamble/SQL/blob/main/SQL_Use_Case_Staging_Table_to_Fact_Table/Images/FACT_TABLE_V1.png?raw=true)
+
 
 Staging_Table - 
-![alt text](https://github.com/vishwajeet-kamble/SQL/SQL_Use_Case_Staging_Table_to_Fact_Table/Images/STAGING_TABLE_V1.png)
+![alt text](https://github.com/vishwajeet-kamble/SQL/blob/main/SQL_Use_Case_Staging_Table_to_Fact_Table/Images/STAGING_TABLE_V1.png?raw=true)
 
 
 
