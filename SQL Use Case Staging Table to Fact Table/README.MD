@@ -8,7 +8,7 @@ For eg – In our table Keys are start_time , end_time.
 3.	Check Fact Table data and add rows in Staging Table if it not exist in Fact Table.
 4.	Remove duplicates from Staging Table and Fact Table
 
-## Concept of Staging Table and Fact Table in Data waehousing
+## Concept of Staging Table and Fact Table in Data Warehousing
 The concept of a staging table and a fact table is commonly used in data warehousing and ETL (Extract, Transform, Load) processes.
 A staging table is a temporary table that holds data before it is loaded into the final destination table, which is typically the fact table. The staging table is used to hold data from different sources, and it may contain duplicates, inconsistent data, or data that needs to be transformed or validated before it is loaded into the fact table.
 The fact table, on the other hand, is the main table in a star or snowflake schema that holds the data that has been transformed and cleaned from the staging table. The fact table typically contains the measures or metrics that are used to analyze and report the data, and it is joined to dimension tables that provide the context or metadata for the measures.
@@ -16,7 +16,8 @@ In the ETL process, data is extracted from the source systems, transformed or cl
 
 ## In This Usecase we are Upserting Data - 
 Upsert is a database operation that combines the actions of inserting a new row in a table with updating an existing row, depending on whether the row already exists or not. In other words, if a row already exists in the table, the upsert operation updates it with new data, otherwise, it inserts a new row with the given data. The upsert operation is often used to efficiently synchronize data between different sources, such as between a staging table and a fact table, as seen in the example provided. Upsert is also known as merge, insert or update, and put or post depending on the context in which it is used.
-Summary of Procedure –
+
+## Summary of Procedure –
 This is a stored procedure called "UpsertFactTableFromStaging" that performs an "upsert" operation on a fact table using data from a staging table. An "upsert" operation means that the procedure updates existing rows if they match certain criteria, and inserts new rows if they do not exist in the fact table.
 The procedure first checks if the "id" column exists in both the staging and fact tables. If it does not exist, it adds an "id" column with an auto-incrementing primary key constraint to both tables.
 Next, it updates matching rows in the fact table using data from the staging table. If a row with the same values for "Start_Date", "End_Date", "Data_1", "Data_2", and "Data_3" already exists in the fact table, the procedure updates that row with the corresponding values from the staging table.
