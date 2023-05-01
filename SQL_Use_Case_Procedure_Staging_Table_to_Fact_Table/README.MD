@@ -107,17 +107,17 @@ Fact_Table -
 
 
 Staging_Table -
-![alt text](https://github.com/vishwajeet-kamble/SQL/blob/main/SQL_Use_Case_Procedure_Staging_Table_to_Fact_Table/Images/STAGING_TABLE.png?raw=true)
+![alt text](https://github.com/vishwajeet-kamble/SQL/blob/main/SQL_Use_Case_Procedure_Staging_Table_to_Fact_Table/images/STAGING_TABLE.png?raw=true)
 
 
 After Execution of Query – 
 
 Fact_Table -
-![alt text](https://github.com/vishwajeet-kamble/SQL/blob/main/SQL_Use_Case_Procedure_Staging_Table_to_Fact_Table/Images/FACT_TABLE_V1.png?raw=true)
+![alt text](https://github.com/vishwajeet-kamble/SQL/blob/main/SQL_Use_Case_Procedure_Staging_Table_to_Fact_Table/images/FACT_TABLE_V1.png?raw=true)
 
 
 Staging_Table - 
-![alt text](https://github.com/vishwajeet-kamble/SQL/blob/main/SQL_Use_Case_Procedure_Staging_Table_to_Fact_Table/Images/STAGING_TABLE_V1.png?raw=true)
+![alt text](https://github.com/vishwajeet-kamble/SQL/blob/main/SQL_Use_Case_Procedure_Staging_Table_to_Fact_Table/images/STAGING_TABLE_V1.png?raw=true)
 
 
 
