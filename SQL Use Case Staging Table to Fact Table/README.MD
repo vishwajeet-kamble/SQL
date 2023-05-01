@@ -28,77 +28,77 @@ At the end of the procedure, it drops the "id" column from both the staging and 
 The delimiter statement is used to separate the procedure definition from other SQL statements in the same script. In this case, it sets the delimiter to "//" so that the semicolon can be used within the stored procedure without causing errors. The delimiter is then set back to ";" using the DELIMITER statement at the end of the procedure.
 
 ## Code for Procedure –
+	
+	DELIMITER //
 
-DELIMITER //
+	CREATE PROCEDURE UpsertFactTableFromStaging()
+	BEGIN
+	    -- Add id column to staging_table if it doesn't exist
+	    IF NOT EXISTS (
+		SELECT * FROM INFORMATION_SCHEMA.COLUMNS 
+		WHERE TABLE_NAME = 'staging_table' 
+		AND COLUMN_NAME = 'id'
+	    ) THEN
+		ALTER TABLE staging_table ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
+	    END IF;
 
-CREATE PROCEDURE UpsertFactTableFromStaging()
-BEGIN
-    -- Add id column to staging_table if it doesn't exist
-    IF NOT EXISTS (
-        SELECT * FROM INFORMATION_SCHEMA.COLUMNS 
-        WHERE TABLE_NAME = 'staging_table' 
-        AND COLUMN_NAME = 'id'
-    ) THEN
-        ALTER TABLE staging_table ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
-    END IF;
+	    -- Add id column to fact_table if it doesn't exist
+	    IF NOT EXISTS (
+		SELECT * FROM INFORMATION_SCHEMA.COLUMNS 
+		WHERE TABLE_NAME = 'fact_table' 
+		AND COLUMN_NAME = 'id'
+	    ) THEN
+		ALTER TABLE fact_table ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
+	    END IF;
 
-    -- Add id column to fact_table if it doesn't exist
-    IF NOT EXISTS (
-        SELECT * FROM INFORMATION_SCHEMA.COLUMNS 
-        WHERE TABLE_NAME = 'fact_table' 
-        AND COLUMN_NAME = 'id'
-    ) THEN
-        ALTER TABLE fact_table ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
-    END IF;
+	    -- Update matching rows in fact table from staging table
+	    INSERT INTO fact_table (Start_Date, End_Date, Data_1, Data_2, Data_3)
+	    SELECT s.Start_Date, s.End_Date, s.Data_1, s.Data_2, s.Data_3
+	    FROM staging_table AS s
+	    ON DUPLICATE KEY UPDATE 
+		Data_1 = VALUES(Data_1),
+		Data_2 = VALUES(Data_2),
+		Data_3 = VALUES(Data_3);
 
-    -- Update matching rows in fact table from staging table
-    INSERT INTO fact_table (Start_Date, End_Date, Data_1, Data_2, Data_3)
-    SELECT s.Start_Date, s.End_Date, s.Data_1, s.Data_2, s.Data_3
-    FROM staging_table AS s
-    ON DUPLICATE KEY UPDATE 
-        Data_1 = VALUES(Data_1),
-        Data_2 = VALUES(Data_2),
-        Data_3 = VALUES(Data_3);
+	    -- Delete duplicate rows from fact table
+	    DELETE f1
+	    FROM fact_table f1
+	    JOIN fact_table f2
+	    ON f1.Start_Date = f2.Start_Date 
+	    AND f1.End_Date = f2.End_Date 
+	    AND f1.Data_1 = f2.Data_1 
+	    AND f1.Data_2 = f2.Data_2 
+	    AND f1.Data_3 = f2.Data_3 
+	    AND f1.id > f2.id;
 
-    -- Delete duplicate rows from fact table
-    DELETE f1
-    FROM fact_table f1
-    JOIN fact_table f2
-    ON f1.Start_Date = f2.Start_Date 
-    AND f1.End_Date = f2.End_Date 
-    AND f1.Data_1 = f2.Data_1 
-    AND f1.Data_2 = f2.Data_2 
-    AND f1.Data_3 = f2.Data_3 
-    AND f1.id > f2.id;
+	    -- Insert new rows from staging table into fact table if they don't exist
+	    INSERT INTO fact_table (Start_Date, End_Date, Data_1, Data_2, Data_3)
+	    SELECT s.Start_Date, s.End_Date, s.Data_1, s.Data_2, s.Data_3
+	    FROM staging_table AS s
+	    LEFT JOIN fact_table AS f
+	    ON s.Start_Date = f.Start_Date AND s.End_Date = f.End_Date
+	    WHERE f.Start_Date IS NULL AND f.End_Date IS NULL;
 
-    -- Insert new rows from staging table into fact table if they don't exist
-    INSERT INTO fact_table (Start_Date, End_Date, Data_1, Data_2, Data_3)
-    SELECT s.Start_Date, s.End_Date, s.Data_1, s.Data_2, s.Data_3
-    FROM staging_table AS s
-    LEFT JOIN fact_table AS f
-    ON s.Start_Date = f.Start_Date AND s.End_Date = f.End_Date
-    WHERE f.Start_Date IS NULL AND f.End_Date IS NULL;
+	    -- Delete duplicate rows from staging table
+	    DELETE s1
+	    FROM staging_table s1
+	    JOIN staging_table s2
+	    ON s1.Start_Date = s2.Start_Date 
+	    AND s1.End_Date = s2.End_Date 
+	    AND s1.Data_1 = s2.Data_1 
+	    AND s1.Data_2 = s2.Data_2 
+	    AND s1.Data_3 = s2.Data_3 
+	    AND s1.id > s2.id;
 
-    -- Delete duplicate rows from staging table
-    DELETE s1
-    FROM staging_table s1
-    JOIN staging_table s2
-    ON s1.Start_Date = s2.Start_Date 
-    AND s1.End_Date = s2.End_Date 
-    AND s1.Data_1 = s2.Data_1 
-    AND s1.Data_2 = s2.Data_2 
-    AND s1.Data_3 = s2.Data_3 
-    AND s1.id > s2.id;
-    
-    ALTER TABLE fact_table
-	DROP COLUMN id;	
-    
-    ALTER TABLE staging_table
-	DROP COLUMN id;	
-END //
+	    ALTER TABLE fact_table
+		DROP COLUMN id;	
 
-DELIMITER ;
+	    ALTER TABLE staging_table
+		DROP COLUMN id;	
+	END //
 
+	DELIMITER ;
+	
 
 Sample Table – 
 
