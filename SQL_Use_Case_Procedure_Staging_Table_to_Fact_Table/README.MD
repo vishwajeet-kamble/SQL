@@ -102,11 +102,11 @@ The delimiter statement is used to separate the procedure definition from other 
 
 Sample Table – 
 
-Fact_Table -
+Fact_Table - <br>
 ![alt text](https://github.com/vishwajeet-kamble/SQL/blob/main/SQL_Use_Case_Procedure_Staging_Table_to_Fact_Table/images/FACT_TABLE.png?raw=true)
 
 
-Staging_Table -
+Staging_Table - <br>
 ![alt text](https://github.com/vishwajeet-kamble/SQL/blob/main/SQL_Use_Case_Procedure_Staging_Table_to_Fact_Table/images/STAGING_TABLE.png?raw=true)
 
 
