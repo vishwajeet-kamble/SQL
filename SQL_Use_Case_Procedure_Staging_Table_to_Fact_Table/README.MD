@@ -40,7 +40,7 @@ The delimiter statement is used to separate the procedure definition from other 
 			WHERE TABLE_NAME = 'staging_table' 
 			AND COLUMN_NAME = 'id'
 			) THEN
-		ALTER TABLE staging_table ADD COLUMN id INT AUTO_INCREMENT;
+		ALTER TABLE staging_table ADD COLUMN id INT AUTO_INCREMENT KEY;
 	END IF;
 
 	-- Add id column to fact_table if it doesn't exist
@@ -50,7 +50,7 @@ The delimiter statement is used to separate the procedure definition from other 
 			AND COLUMN_NAME = 'id'
 			) 
 			THEN 
-		ALTER TABLE fact_table ADD COLUMN id INT AUTO_INCREMENT;
+		ALTER TABLE fact_table ADD COLUMN id INT AUTO_INCREMENT KEY;
 	END IF;
 
 	-- Update matching rows in fact table from staging table
